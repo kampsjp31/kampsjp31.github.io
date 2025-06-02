@@ -1,10 +1,8 @@
-<!doctype html>
 <html>
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Light Theme</title>
 <link href="file:///Macintosh HD/Users/jordankamps/Library/Application Support/Adobe/Dreamweaver 2021/en_US/Configuration/Temp/Assets/eam53b39dd6.TMP/css/simpleGridTemplate.css" rel="stylesheet" type="text/css">
 </head>
 <body>
