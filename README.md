@@ -47,25 +47,6 @@
   </div>
   <div class="gallery">
     <div class="thumbnail"> <a href="#"><img src="file:///Macintosh HD/Users/jordankamps/Library/Application Support/Adobe/Dreamweaver 2021/en_US/Configuration/Temp/Assets/eam53b39dd6.TMP/images/bkg_06.jpg" alt="" width="2000" class="cards"/></a>
-      <h4>TITLE</h4>
-      <p class="tag">HTML, CSS, JS, WordPress</p>
-      <p class="text_column">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-    </div>
-    <div class="thumbnail"> <a href="#"><img src="file:///Macintosh HD/Users/jordankamps/Library/Application Support/Adobe/Dreamweaver 2021/en_US/Configuration/Temp/Assets/eam53b39dd6.TMP/images/bkg_06.jpg" alt="" width="2000" class="cards"/></a>
-      <h4>TITLE</h4>
-      <p class="tag">HTML, CSS, JS, WordPress</p>
-      <p class="text_column">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-    </div>
-    <div class="thumbnail"> <a href="#"><img src="file:///Macintosh HD/Users/jordankamps/Library/Application Support/Adobe/Dreamweaver 2021/en_US/Configuration/Temp/Assets/eam53b39dd6.TMP/images/bkg_06.jpg" alt="" width="2000" class="cards"/></a>
-      <h4>TITLE</h4>
-      <p class="tag">HTML, CSS, JS, WordPress</p>
-      <p class="text_column">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-    </div>
-    <div class="thumbnail"> <a href="#"><img src="file:///Macintosh HD/Users/jordankamps/Library/Application Support/Adobe/Dreamweaver 2021/en_US/Configuration/Temp/Assets/eam53b39dd6.TMP/images/bkg_06.jpg" alt="" width="2000" class="cards"/></a>
-      <h4>TITLE</h4>
-      <p class="tag">HTML, CSS, JS, WordPress</p>
-      <p class="text_column">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-    </div>
   </div>
   <!-- Footer Section -->
   <footer id="contact">
