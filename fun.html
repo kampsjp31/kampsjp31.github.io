@@ -2,8 +2,9 @@
 <html>
 <head>
     <title>Display JSON Data</title>
-	<script type="text/javascript" src="https://cdn.cycling74.com/rnbo/latest/rnbo.min.js"></script>
 </head>
+	<script type="text/javascript" src="https://cdn.cycling74.com/rnbo/latest/rnbo.min.js"></script>
+	const device = await RNBO.createDevice({ audioContext, patcher });
 <body>
     <div id="dataDisplay"></div>
 
