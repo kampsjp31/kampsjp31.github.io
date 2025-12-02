@@ -8,11 +8,14 @@
 <script>
 fetch('data.json')
   .then(r => r.json())
-  .then(json => {
-    document.getElementById('out').textContent =
-      JSON.stringify(json, null, 2);
-  });
+  .then(data => {
+    document.getElementById("output").textContent =
+      JSON.stringify(data, null, 2);
+  })
+  .catch(err => console.error(err));
 </script>
+
+<pre id="output"></pre>
 
 </body>
 </html>
