@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <title>Display JSON Data</title>
+</head>
 <body>
-<h2>Fun test</h2>
+    <div id="dataDisplay"></div>
 
-<pre id="output"></pre>
-
-<script>
-fetch('data.json')
-  .then(r => r.json())
-  .then(data => {
-    document.getElementById("output").textContent =
-      JSON.stringify(data, null, 2);
-  })
-  .catch(err => console.error(err));
-</script>
-
+    <script>
+        fetch('data.json') // Assuming 'data.json' is in the same directory
+            .then(response => response.json()) // Parse the response as JSON
+            .then(data => {
+                // Now 'data' is a JavaScript object parsed from your JSON
+                document.getElementById('dataDisplay').innerText = JSON.stringify(data, null, 2); 
+                // Display the data (formatted for readability)
+            })
+            .catch(error => console.error('Error fetching JSON:', error));
+    </script>
 </body>
 </html>
