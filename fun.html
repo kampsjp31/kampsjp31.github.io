@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h2>Fun test</h2>
+
+<pre id="out"></pre>
+
+<script>
+fetch('feedback-synth.export.json')
+  .then(r => r.json())
+  .then(json => {
+    document.getElementById('out').textContent =
+      JSON.stringify(json, null, 2);
+  });
+</script>
+
+</body>
+</html>
