@@ -6,7 +6,7 @@
 <pre id="out"></pre>
 
 <script>
-fetch('feedback-synth.export.json')
+fetch('data.json')
   .then(r => r.json())
   .then(json => {
     document.getElementById('out').textContent =
