@@ -7,7 +7,7 @@
     <div id="dataDisplay"></div>
 
     <script>
-        fetch('data.json') // Assuming 'data.json' is in the same directory
+        fetch("./data.json") // Assuming 'data.json' is in the same directory
             .then(response => response.json()) // Parse the response as JSON
             .then(data => {
                 // Now 'data' is a JavaScript object parsed from your JSON
