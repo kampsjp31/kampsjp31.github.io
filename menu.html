@@ -132,10 +132,25 @@ body {
 
 <script>
 function formatDate(dateStr) {
-  const options = { month: 'long', day: 'numeric', year: 'numeric' };
-  return new Date(dateStr).toLocaleDateString(undefined, options);
-}
+  const [year, month, day] = dateStr.split('-');
+  const date = new Date(year, month - 1, day); // local timezone
 
+  return date.toLocaleDateString(undefined, {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric'
+  });
+}
+function formatTime(timeStr) {
+  const [hour, minute] = timeStr.split(':');
+  let h = parseInt(hour, 10);
+  const ampm = h >= 12 ? 'pm' : 'am';
+
+  h = h % 12;
+  if (h === 0) h = 12;
+
+  return `${h}:${minute}${ampm}`;
+}
 fetch('events.json')
   .then(res => res.json())
   .then(events => {
@@ -179,7 +194,7 @@ END:VCALENDAR`;
 
       div.innerHTML = `
         <div class="event-title">${e.title}</div>
-        <div class="event-date">${formatDate(e.date)} • ${e.time}</div>
+        <div class="event-date">${formatDate(e.date)} • ${formatTime(e.time)}</div>
 
         <div class="event-section">
           <span class="label">Food:</span> ${e.food || "—"}
@@ -198,9 +213,7 @@ END:VCALENDAR`;
       container.appendChild(div);
     });
   });
-</script>
-									
-									
+</script>			
 								</article>
 
 						</div>
