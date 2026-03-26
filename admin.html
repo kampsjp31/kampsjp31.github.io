@@ -1,0 +1,65 @@
+<html>
+<script>
+const correctPassword = "Jotties2020";
+
+function checkPassword() {
+  const input = document.getElementById("password").value;
+
+  if (input === correctPassword) {
+    document.getElementById("login").style.display = "none";
+    document.getElementById("adminContent").style.display = "block";
+  } else {
+    alert("Incorrect password");
+  }
+}
+</script>
+<div id="login" style="text-align:center; margin-top:100px;">
+  <h2>Admin Login</h2>
+  <input type="password" id="password" placeholder="Enter password">
+  <br><br>
+  <button onclick="checkPassword()">Login</button>
+</div>
+
+<div id="adminContent" style="display:none;">
+<form id="eventForm">
+  <input name="title" placeholder="Title" required><br>
+  <input name="date" type="date" required><br>
+  <input name="time" type="time" required><br>
+  <input name="food" placeholder="Food"><br>
+  <textarea name="notes" placeholder="Notes"></textarea><br>
+  <input name="type" placeholder="Type (concert, rehearsal, etc)"><br>
+
+  <button type="submit">Add Event</button>
+</form>
+
+<p id="status"></p>
+<h2>Add Event</h2>
+<script>
+const scriptURL = "https://script.google.com/macros/s/AKfycbycD-waYfUnX6ZhMigN96TNXxOqG2C3uVDjAWpxdfOQkc4gTJqlJU0hm9iuAN18LMbP/exec";
+
+document.getElementById("eventForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const formData = new FormData(this);
+
+  const data = Object.fromEntries(formData.entries());
+
+  fetch(scriptURL, {
+    method: "POST",
+    body: JSON.stringify(data)
+  })
+  .then(res => res.text())
+  .then(() => {
+    document.getElementById("status").innerText = "Event added!";
+    this.reset();
+  })
+  .catch(err => {
+    console.error(err);
+    document.getElementById("status").innerText = "Error adding event.";
+  });
+});
+</script>
+</div>
+
+	
+	</html>
