@@ -58,10 +58,149 @@
 										</h2>
 									</header>
 									<span class="image featured"><img src="images/Jotties-02 copy.png" alt="" /></span>
-									<h2>
-									  Below is the upcoming schedule of known off days&nbsp;
-                              			</h2>
-								<c>	<iframe src="https://calendar.google.com/calendar/embed?src=b5fc74bcc45bd1af39d783816d6c3651f900a0a1b18849b1a80059c6b8080111%40group.calendar.google.com&ctz=America%2FChicago&mode=AGENDA&showTitle=0&showNav=1&showPrint=0&showCalendars=0" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe> </c>
+<h2 style="text-align:center;">Upcoming Events</h2>
+<div id="schedule"></div>
+
+<style>
+body {
+  font-family: system-ui;
+  background: #f5f7fb;
+}
+
+#schedule {
+  max-width: 800px;
+  margin: auto;
+  padding: 10px;
+}
+
+.event {
+  background: white;
+  padding: 18px;
+  margin-bottom: 16px;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: transform 0.15s ease;
+}
+
+.event:hover {
+  transform: translateY(-3px);
+}
+
+.event-title {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.event-date {
+  color: #4a7cff;
+  font-weight: 500;
+  margin-top: 4px;
+}
+
+.event-section {
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.label {
+  font-weight: 600;
+}
+
+.buttons {
+  margin-top: 12px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 6px 12px;
+  margin-right: 8px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.google {
+  background: #4a7cff;
+  color: white;
+}
+
+.ics {
+  background: #e5e7eb;
+  color: black;
+}
+</style>
+
+<script>
+function formatDate(dateStr) {
+  const options = { month: 'long', day: 'numeric', year: 'numeric' };
+  return new Date(dateStr).toLocaleDateString(undefined, options);
+}
+
+fetch('events.json')
+  .then(res => res.json())
+  .then(events => {
+
+    const now = new Date();
+
+    events = events
+      .map(e => ({
+        ...e,
+        datetime: new Date(e.date + " " + e.time)
+      }))
+      .filter(e => e.datetime >= now)
+      .sort((a,b) => a.datetime - b.datetime);
+
+    const container = document.getElementById('schedule');
+
+    events.forEach(e => {
+      const start = e.date.replaceAll('-', '') + "T" + e.time.replace(':','') + "00";
+
+      const googleLink = `https://www.google.com/calendar/render?action=TEMPLATE
+        &text=${encodeURIComponent(e.title)}
+        &dates=${start}/${start}
+        &details=${encodeURIComponent(e.notes + " | Food: " + e.food)}`;
+
+      const icsContent = `
+BEGIN:VCALENDAR
+VERSION:2.0
+BEGIN:VEVENT
+SUMMARY:${e.title}
+DTSTART:${start}
+DTEND:${start}
+DESCRIPTION:${e.notes} | Food: ${e.food}
+END:VEVENT
+END:VCALENDAR`;
+
+      const blob = new Blob([icsContent], { type: 'text/calendar' });
+      const icsUrl = URL.createObjectURL(blob);
+
+      const div = document.createElement('div');
+      div.className = 'event';
+
+      div.innerHTML = `
+        <div class="event-title">${e.title}</div>
+        <div class="event-date">${formatDate(e.date)} • ${e.time}</div>
+
+        <div class="event-section">
+          <span class="label">Food:</span> ${e.food || "—"}
+        </div>
+
+        <div class="event-section">
+          <span class="label">Notes:</span> ${e.notes || "—"}
+        </div>
+
+        <div class="buttons">
+          <a class="btn google" href="${googleLink}" target="_blank">Add to Google</a>
+          <a class="btn ics" href="${icsUrl}" download="${e.title}.ics">Download .ics</a>
+        </div>
+      `;
+
+      container.appendChild(div);
+    });
+  });
+</script>
+									
+									
 								</article>
 
 						</div>
