@@ -133,32 +133,28 @@ body {
 <script>
 function formatDate(dateStr) {
   const [year, month, day] = dateStr.split('-');
-  const date = new Date(year, month - 1, day); // local timezone
-
+  const date = new Date(year, month - 1, day);
   return date.toLocaleDateString(undefined, {
     month: 'long',
     day: 'numeric',
     year: 'numeric'
   });
 }
+
 function formatTime(timeStr) {
   const [hour, minute] = timeStr.split(':');
   let h = parseInt(hour, 10);
   const ampm = h >= 12 ? 'pm' : 'am';
-
   h = h % 12;
   if (h === 0) h = 12;
-
   return `${h}:${minute}${ampm}`;
 }
+
 function toGoogleDate(date, time) {
   const [year, month, day] = date.split('-');
   const [hour, minute] = time.split(':');
-
   const d = new Date(year, month - 1, day, hour, minute);
-
   const pad = (n) => n.toString().padStart(2, '0');
-
   return (
     d.getUTCFullYear() +
     pad(d.getUTCMonth() + 1) +
@@ -168,77 +164,77 @@ function toGoogleDate(date, time) {
     '00Z'
   );
 }
-fetch('events.json')
-  .then(res => res.json())
-  .then(events => {
 
+fetch('/events.json')
+  .then(res => {
+    if (!res.ok) throw new Error("Could not load events.json");
+    return res.json();
+  })
+  .then(events => {
+    const container = document.getElementById('schedule');
+    container.innerHTML = "";
     const now = new Date();
 
-    events = events
+    events
+      .filter(e => e && e.title && e.date && e.time)
       .map(e => ({
         ...e,
         datetime: new Date(e.date + " " + e.time)
       }))
       .filter(e => e.datetime >= now)
-      .sort((a,b) => a.datetime - b.datetime);
+      .sort((a, b) => a.datetime - b.datetime)
+      .forEach(e => {
 
-    const container = document.getElementById('schedule');
+        const start = toGoogleDate(e.date, e.time);
 
-    events.forEach(e => {
-      const start = e.date.replaceAll('-', '') + "T" + e.time.replace(':','') + "00";
+        const endDate = new Date(e.date + " " + e.time);
+        endDate.setHours(endDate.getHours() + 1);
 
-      const start = toGoogleDate(e.date, e.time);
+        const end = toGoogleDate(
+          endDate.toISOString().split('T')[0],
+          endDate.toTimeString().slice(0,5)
+        );
 
-// Add 1 hour duration
-const endDate = new Date(e.date + " " + e.time);
-endDate.setHours(endDate.getHours() + 1);
+        const notes = e.notes || "";
+        const food = e.food || "—";
 
-const end = toGoogleDate(
-  endDate.toISOString().split('T')[0],
-  endDate.toTimeString().slice(0,5)
-);
+        const googleLink = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(e.title)}&dates=${start}/${end}&details=${encodeURIComponent(notes + " | Food: " + food)}`;
 
-const googleLink = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(e.title)}&dates=${start}/${end}&details=${encodeURIComponent((e.notes || "") + " | Food: " + (e.food || ""))}`;
-
-      const icsContent = `
-BEGIN:VCALENDAR
+        const icsContent = `BEGIN:VCALENDAR
 VERSION:2.0
 BEGIN:VEVENT
 SUMMARY:${e.title}
 DTSTART:${start}
-DTEND:${start}
-DESCRIPTION:${e.notes} | Food: ${e.food}
+DTEND:${end}
+DESCRIPTION:${notes} | Food: ${food}
 END:VEVENT
 END:VCALENDAR`;
 
-      const blob = new Blob([icsContent], { type: 'text/calendar' });
-      const icsUrl = URL.createObjectURL(blob);
+        const icsUrl = "data:text/calendar;charset=utf8," + encodeURIComponent(icsContent);
 
-      const div = document.createElement('div');
-      div.className = 'event';
+        const div = document.createElement('div');
+        const typeClass = e.type ? e.type.toLowerCase() : "default";
+        div.className = 'event ' + typeClass;
 
-      div.innerHTML = `
-        <div class="event-title">${e.title}</div>
-        <div class="event-date">${formatDate(e.date)} • ${formatTime(e.time)}</div>
+        div.innerHTML = `
+          <div class="event-title">${e.title}</div>
+          <div class="event-date">${formatDate(e.date)} • ${formatTime(e.time)}</div>
+          <div class="event-section"><span class="label">Food:</span> ${food}</div>
+          <div class="event-section"><span class="label">Notes:</span> ${notes || "—"}</div>
+          <div class="buttons">
+            <a class="btn google" href="${googleLink}" target="_blank">Add to Google</a>
+            <a class="btn ics" href="${icsUrl}" download="${e.title}.ics">Download .ics</a>
+          </div>
+        `;
+        container.appendChild(div);
+      });
 
-        <div class="event-section">
-          <span class="label">Food:</span> ${e.food || "—"}
-        </div>
-
-        <div class="event-section">
-          <span class="label">Notes:</span> ${e.notes || "—"}
-        </div>
-
-        <div class="buttons">
-          <a class="btn google" href="${googleLink}" target="_blank">Add to Google</a>
-          <a class="btn ics" href="${icsUrl}" download="${e.title}.ics">Download .ics</a>
-        </div>
-      `;
-
-      container.appendChild(div);
-    });
+  })
+  .catch(err => {
+    console.error(err);
+    document.getElementById('schedule').innerHTML = "<p style='color:red;'>Error loading events. Check console.</p>";
   });
-</script>			
+</script>		
 								</article>
 
 						</div>
