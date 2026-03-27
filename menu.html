@@ -128,123 +128,64 @@ body {
   background: #e5e7eb;
   color: black;
 }
+.event.on {
+  border-left: 6px solid #4a7cff;
+}
+
+.event.off {
+  border-left: 6px solid #22c55e;
+}
 </style>
 
 <script>
 function formatDate(dateStr) {
-  const [year, month, day] = dateStr.split('-');
-  const date = new Date(year, month - 1, day);
-  return date.toLocaleDateString(undefined, {
-    month: 'long',
-    day: 'numeric',
-    year: 'numeric'
+  const [y,m,d] = dateStr.split('-');
+  return new Date(y, m-1, d).toLocaleDateString(undefined, {
+    month:'long', day:'numeric', year:'numeric'
   });
 }
 
-function formatTime(timeStr) {
-  const [hour, minute] = timeStr.split(':');
-  let h = parseInt(hour, 10);
-  const ampm = h >= 12 ? 'pm' : 'am';
-  h = h % 12;
-  if (h === 0) h = 12;
-  return `${h}:${minute}${ampm}`;
-}
-
-function toGoogleDate(date, time) {
-  const [year, month, day] = date.split('-');
-  const [hour, minute] = time.split(':');
-
-  return (
-    year +
-    month +
-    day + 'T' +
-    hour +
-    minute +
-    '00'
-  );
+function formatTime(t) {
+  const [h,m] = t.split(':');
+  let hour = parseInt(h);
+  const ampm = hour >= 12 ? 'pm' : 'am';
+  hour = hour % 12 || 12;
+  return `${hour}:${m}${ampm}`;
 }
 
 fetch('/events.json')
-  .then(res => {
-    if (!res.ok) throw new Error("Could not load events.json");
-    return res.json();
-  })
-  .then(events => {
-    const container = document.getElementById('schedule');
-    container.innerHTML = "";
-    const now = new Date();
+.then(res => res.json())
+.then(events => {
 
-    events
-      .filter(e => e && e.title && e.date && e.time)
-      .map(e => ({
-        ...e,
-        datetime: new Date(e.date + " " + e.time)
-      }))
-      .filter(e => e.datetime >= now)
-      .sort((a, b) => a.datetime - b.datetime)
-      .forEach(e => {
+  const container = document.getElementById('schedule');
 
-        const start = toGoogleDate(e.date, e.time);
+  events.forEach(e => {
 
-        const endDate = new Date(e.date + " " + e.time);
-        endDate.setHours(endDate.getHours() + 1);
+    if (!e.title || !e.date || !e.time) {
+      console.warn("Skipping bad event:", e);
+      return;
+    }
 
-        const end = toGoogleDate(
-          endDate.toISOString().split('T')[0],
-          endDate.toTimeString().slice(0,5)
-        );
+    const div = document.createElement('div');
+    div.className = 'event';
 
-        const notes = e.notes || "";
-        const food = e.food || "—";
+    div.innerHTML = `
+      <div class="event-title">${e.title}</div>
+      <div class="event-date">${formatDate(e.date)} • ${formatTime(e.time)}</div>
+      <div>Food: ${e.food || "—"}</div>
+      <div>Notes: ${e.notes || "—"}</div>
+    `;
 
-       const start = toGoogleDate(e.date, e.time);
-
-// add 1 hour manually
-let [h, m] = e.time.split(':').map(Number);
-h = h + 1;
-
-if (h >= 24) h = h - 24;
-
-const endTime = `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}`;
-const end = toGoogleDate(e.date, endTime);
-
-const googleLink = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(e.title)}&dates=${start}/${end}&details=${encodeURIComponent((e.notes || "") + " | Food: " + (e.food || ""))}`;
-
-        const icsContent = `BEGIN:VCALENDAR
-VERSION:2.0
-BEGIN:VEVENT
-SUMMARY:${e.title}
-DTSTART:${start}
-DTEND:${end}
-DESCRIPTION:${notes} | Food: ${food}
-END:VEVENT
-END:VCALENDAR`;
-
-        const icsUrl = "data:text/calendar;charset=utf8," + encodeURIComponent(icsContent);
-
-        const div = document.createElement('div');
-        const typeClass = e.type ? e.type.toLowerCase() : "default";
-        div.className = 'event ' + typeClass;
-
-        div.innerHTML = `
-          <div class="event-title">${e.title}</div>
-          <div class="event-date">${formatDate(e.date)} • ${formatTime(e.time)}</div>
-          <div class="event-section"><span class="label">Food:</span> ${food}</div>
-          <div class="event-section"><span class="label">Notes:</span> ${notes || "—"}</div>
-          <div class="buttons">
-            <a class="btn google" href="${googleLink}" target="_blank">Add to Google</a>
-            <a class="btn ics" href="${icsUrl}" download="${e.title}.ics">Download .ics</a>
-          </div>
-        `;
-        container.appendChild(div);
-      });
-
-  })
-  .catch(err => {
-    console.error(err);
-    document.getElementById('schedule').innerHTML = "<p style='color:red;'>Error loading events. Check console.</p>";
+    container.appendChild(div);
   });
-</script>		
+
+})
+.catch(err => {
+  console.error("ERROR:", err);
+  document.getElementById('schedule').innerHTML =
+    "<p style='color:red;'>Error loading events</p>";
+});
+</script>
 								</article>
 
 						</div>

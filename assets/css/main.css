@@ -2701,7 +2701,7 @@ input, select, textarea {
 					margin-left: 0;
 					border-left: 0;
 				}
-		.event.on {
+.event.on {
   border-left: 6px solid #4a7cff;
 }
 
