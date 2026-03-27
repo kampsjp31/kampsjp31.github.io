@@ -2701,5 +2701,12 @@ input, select, textarea {
 					margin-left: 0;
 					border-left: 0;
 				}
+		.event.on {
+  border-left: 6px solid #4a7cff;
+}
+
+.event.off {
+  border-left: 6px solid #22c55e;
+}
 
 	}

@@ -153,15 +153,14 @@ function formatTime(timeStr) {
 function toGoogleDate(date, time) {
   const [year, month, day] = date.split('-');
   const [hour, minute] = time.split(':');
-  const d = new Date(year, month - 1, day, hour, minute);
-  const pad = (n) => n.toString().padStart(2, '0');
+
   return (
-    d.getUTCFullYear() +
-    pad(d.getUTCMonth() + 1) +
-    pad(d.getUTCDate()) + 'T' +
-    pad(d.getUTCHours()) +
-    pad(d.getUTCMinutes()) +
-    '00Z'
+    year +
+    month +
+    day + 'T' +
+    hour +
+    minute +
+    '00'
   );
 }
 
@@ -198,7 +197,18 @@ fetch('/events.json')
         const notes = e.notes || "";
         const food = e.food || "—";
 
-        const googleLink = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(e.title)}&dates=${start}/${end}&details=${encodeURIComponent(notes + " | Food: " + food)}`;
+       const start = toGoogleDate(e.date, e.time);
+
+// add 1 hour manually
+let [h, m] = e.time.split(':').map(Number);
+h = h + 1;
+
+if (h >= 24) h = h - 24;
+
+const endTime = `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}`;
+const end = toGoogleDate(e.date, endTime);
+
+const googleLink = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(e.title)}&dates=${start}/${end}&details=${encodeURIComponent((e.notes || "") + " | Food: " + (e.food || ""))}`;
 
         const icsContent = `BEGIN:VCALENDAR
 VERSION:2.0

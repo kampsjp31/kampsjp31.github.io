@@ -4,76 +4,87 @@
     "date": "2026-04-01",
     "time": "19:00",
     "food": "TBD",
-    "notes": ""
+    "notes": "",
+	"type": "On"
   },
   {
     "title": "Jotties",
     "date": "2026-04-08",
     "time": "19:00",
     "food": "TBD",
-    "notes": ""
+    "notes": "",
+	"type": "On"
   },
 	  {
     "title": "Jotties",
     "date": "2026-04-15",
     "time": "19:00",
     "food": "TBD",
-    "notes": "It's Tax Day!"
+    "notes": "It's Tax Day!",
+	"type": "On"
   },
 	  {
     "title": "Jotties",
     "date": "2026-04-22",
     "time": "19:00",
     "food": "TBD",
-    "notes": ""
+    "notes": "",
+	"type": "On"
   },
 	  {
     "title": "NO JOTTIES",
     "date": "2026-04-29",
     "time": "19:00",
     "food": "",
-    "notes": ""
+    "notes": "",
+	"type": "Off"
   },
 	  {
     "title": "Probably no Jotties",
     "date": "2026-05-06",
     "time": "19:00",
     "food": "",
-    "notes": ""
+    "notes": "",
+	"type": "Off"
   },
 	  {
     "title": "NO JOTTIES",
     "date": "2026-05-13",
     "time": "19:00",
     "food": "",
-    "notes": ""
+    "notes": "",
+	"type": "Off"
   },
 	  {
     "title": "Jotties",
     "date": "2026-05-20",
     "time": "19:00",
     "food": "TBD",
-    "notes": "This will be the 6th annual Jotties Day celebrations"
+    "notes": "This will be the 6th annual Jotties Day celebrations",
+	"type": "On"
   },
 	  {
     "title": "NO JOTTIES",
     "date": "2026-05-27",
     "time": "19:00",
     "food": "",
-    "notes": ""
+    "notes": "",
+	"type": "Off"
   },
 	  {
     "title": "Jotties",
     "date": "2026-06-03",
     "time": "19:00",
     "food": "TBD",
-    "notes": ""
+    "notes": "",
+	"type": "On"
   },
 	  {
     "title": "Jotties",
     "date": "2026-06-10",
     "time": "19:00",
     "food": "TBD",
-    "notes": ""
+    "notes": "",
+	"type": "On"
   }
 ]
