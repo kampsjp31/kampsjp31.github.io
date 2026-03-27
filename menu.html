@@ -60,7 +60,7 @@
 									<span class="image featured"><img src="images/Jotties-02 copy.png" alt="" /></span>
 <h2 style="text-align:center;">Upcoming schedule with food and known days off</h2>
 <div id="schedule"></div>
- 
+
 <style>
 body {
   font-family: system-ui;
@@ -79,11 +79,6 @@ body {
   margin-bottom: 16px;
   border-radius: 14px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  transition: transform 0.15s ease;
-}
-
-.event:hover {
-  transform: translateY(-3px);
 }
 
 .event-title {
@@ -93,47 +88,21 @@ body {
 
 .event-date {
   color: #4a7cff;
-  font-weight: 500;
   margin-top: 4px;
 }
 
-.event-section {
-  margin-top: 10px;
-  font-size: 14px;
-}
-
-.label {
-  font-weight: 600;
-}
-
-.buttons {
-  margin-top: 12px;
-}
-
-.btn {
-  display: inline-block;
-  padding: 6px 12px;
-  margin-right: 8px;
-  border-radius: 6px;
+.buttons a {
+  margin-right: 10px;
   text-decoration: none;
-  font-size: 14px;
-}
-
-.google {
-  background: #4a7cff;
-  color: white;
-}
-
-.ics {
-  background: #e5e7eb;
-  color: black;
+  color: #4a7cff;
+  font-weight: 500;
 }
 .event.on {
-  border-left: 6px solid #4a7cff;
+  border-left: 6px solid #22c55e;
 }
 
 .event.off {
-  border-left: 6px solid #22c55e;
+  border-left: 6px solid #ef4444;
 }
 </style>
 
@@ -153,35 +122,74 @@ function formatTime(t) {
   return `${hour}:${m}${ampm}`;
 }
 
+function toGoogleDate(date, time) {
+  const [y,m,d] = date.split('-');
+  const [h,min] = time.split(':');
+  return y + m + d + 'T' + h + min + '00';
+}
+
 fetch('/events.json')
 .then(res => res.json())
 .then(events => {
 
   const container = document.getElementById('schedule');
+  container.innerHTML = "";
 
-  events.forEach(e => {
+  const now = new Date();
 
-    if (!e.title || !e.date || !e.time) {
-      console.warn("Skipping bad event:", e);
-      return;
-    }
+  events
+    .filter(e => e.title && e.date && e.time)
+    .map(e => ({
+      ...e,
+      datetime: new Date(e.date + " " + e.time)
+    }))
+    .filter(e => e.datetime >= now)
+    .sort((a,b) => a.datetime - b.datetime)
+    .forEach(e => {
 
-    const div = document.createElement('div');
-    div.className = 'event';
+      const start = toGoogleDate(e.date, e.time);
 
-    div.innerHTML = `
-      <div class="event-title">${e.title}</div>
-      <div class="event-date">${formatDate(e.date)} • ${formatTime(e.time)}</div>
-      <div>Food: ${e.food || "—"}</div>
-      <div>Notes: ${e.notes || "—"}</div>
-    `;
+      let [h,m] = e.time.split(':').map(Number);
+      h = (h + 1) % 24;
+      const endTime = `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}`;
+      const end = toGoogleDate(e.date, endTime);
 
-    container.appendChild(div);
-  });
+      const googleLink = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(e.title)}&dates=${start}/${end}&details=${encodeURIComponent((e.notes || "") + " | Food: " + (e.food || ""))}`;
+
+      const icsContent = `BEGIN:VCALENDAR
+VERSION:2.0
+BEGIN:VEVENT
+SUMMARY:${e.title}
+DTSTART:${start}
+DTEND:${end}
+DESCRIPTION:${e.notes || ""} | Food: ${e.food || ""}
+END:VEVENT
+END:VCALENDAR`;
+
+      const icsUrl = "data:text/calendar;charset=utf8," + encodeURIComponent(icsContent);
+
+      const div = document.createElement('div');
+      const typeClass = e.type ? e.type.toLowerCase() : "default";
+	  div.className = 'event ' + typeClass;
+
+      div.innerHTML = `
+        <div class="event-title">${e.title}</div>
+        <div class="event-date">${formatDate(e.date)} • ${formatTime(e.time)}</div>
+        <div>Food: ${e.food || "—"}</div>
+        <div>Notes: ${e.notes || "—"}</div>
+
+        <div class="buttons" style="margin-top:10px;">
+          <a href="${googleLink}" target="_blank">Add to Google</a>
+          <a href="${icsUrl}" download="${e.title}.ics">Download .ics</a>
+        </div>
+      `;
+
+      container.appendChild(div);
+    });
 
 })
 .catch(err => {
-  console.error("ERROR:", err);
+  console.error(err);
   document.getElementById('schedule').innerHTML =
     "<p style='color:red;'>Error loading events</p>";
 });
