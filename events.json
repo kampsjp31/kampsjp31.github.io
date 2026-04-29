@@ -1,36 +1,4 @@
 [
-  {
-    "title": "Jotties",
-    "date": "2026-04-01",
-    "time": "19:00",
-    "food": "TBD",
-    "notes": "",
-	"type": "On"
-  },
-  {
-    "title": "Jotties",
-    "date": "2026-04-08",
-    "time": "19:00",
-    "food": "TBD",
-    "notes": "",
-	"type": "On"
-  },
-	  {
-    "title": "Jotties",
-    "date": "2026-04-15",
-    "time": "19:00",
-    "food": "TBD",
-    "notes": "It's Tax Day!",
-	"type": "On"
-  },
-	  {
-    "title": "Jotties",
-    "date": "2026-04-22",
-    "time": "19:00",
-    "food": "We're making brats! so bring something",
-    "notes": "",
-	"type": "On"
-  },
 	  {
     "title": "NO JOTTIES",
     "date": "2026-04-29",
@@ -40,7 +8,7 @@
 	"type": "Off"
   },
 	  {
-    "title": "Probably no Jotties",
+    "title": "NO Jotties",
     "date": "2026-05-06",
     "time": "19:00",
     "food": "",
