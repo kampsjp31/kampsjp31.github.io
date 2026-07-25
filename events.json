@@ -1,47 +1,39 @@
 [
 	  {
     "title": "NO JOTTIES",
-    "date": "2026-04-29",
+    "date": "2026-06-29",
     "time": "19:00",
     "food": "",
     "notes": "",
-	"type": "Off"
+	"type": "Maybe"
   },
 	  {
     "title": "NO Jotties",
-    "date": "2026-05-06",
+    "date": "2026-08-05",
     "time": "19:00",
     "food": "",
     "notes": "",
-	"type": "Off"
+	"type": "Maybe"
   },
 	  {
     "title": "NO JOTTIES",
-    "date": "2026-05-13",
+    "date": "2026-08-12",
     "time": "19:00",
-    "food": "",
-    "notes": "",
-	"type": "Off"
+    "food": "BBQ For sure",
+    "notes": "Bring something!",
+	"type": "on"
   },
 	  {
     "title": "Jotties",
-    "date": "2026-05-20",
+    "date": "2026-08-19",
     "time": "19:00",
     "food": "TBD",
-    "notes": "This will be the 6th annual Jotties Day celebrations",
+    "notes": "",
 	"type": "On"
   },
 	  {
     "title": "NO JOTTIES",
-    "date": "2026-05-27",
-    "time": "19:00",
-    "food": "",
-    "notes": "",
-	"type": "Off"
-  },
-	  {
-    "title": "Jotties",
-    "date": "2026-06-03",
+    "date": "2026-08-26",
     "time": "19:00",
     "food": "TBD",
     "notes": "",
@@ -49,10 +41,42 @@
   },
 	  {
     "title": "Jotties",
-    "date": "2026-06-10",
+    "date": "2026-09-02",
+    "time": "19:00",
+    "food": "TBD",
+    "notes": "",
+	"type": "On"
+  },
+	  {
+    "title": "Jotties",
+    "date": "2026-09-09",
+    "time": "19:00",
+    "food": "TBD",
+    "notes": "",
+	"type": "On"
+  },
+	  {
+    "title": "Jotties",
+    "date": "2026-09-16",
     "time": "19:00",
     "food": "Some BBQ",
     "notes": "Bring something!",
+	"type": "On"
+  },
+	  {
+    "title": "Jotties",
+    "date": "2026-09-23",
+    "time": "19:00",
+    "food": "TBD",
+    "notes": "",
+	"type": "On"
+  },
+	  {
+    "title": "Jotties",
+    "date": "2026-09-30",
+    "time": "19:00",
+    "food": "TBD",
+    "notes": "",
 	"type": "On"
   }
 ]
