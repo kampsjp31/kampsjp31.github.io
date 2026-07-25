@@ -1,22 +1,22 @@
 [
 	  {
-    "title": "NO JOTTIES",
-    "date": "2026-06-29",
+    "title": "Maybe Jotties",
+    "date": "2026-07-29",
     "time": "19:00",
     "food": "",
-    "notes": "",
-	"type": "Maybe"
+    "notes": "check back for updates",
+	"type": "maybe"
   },
 	  {
-    "title": "NO Jotties",
+    "title": "Maybe Jotties",
     "date": "2026-08-05",
     "time": "19:00",
     "food": "",
-    "notes": "",
+    "notes": "Check back for updates",
 	"type": "Maybe"
   },
 	  {
-    "title": "NO JOTTIES",
+    "title": "Jotties",
     "date": "2026-08-12",
     "time": "19:00",
     "food": "BBQ For sure",
@@ -32,7 +32,7 @@
 	"type": "On"
   },
 	  {
-    "title": "NO JOTTIES",
+    "title": "Jotties",
     "date": "2026-08-26",
     "time": "19:00",
     "food": "TBD",
