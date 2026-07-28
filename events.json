@@ -1,19 +1,19 @@
 [
 	  {
-    "title": "Maybe Jotties",
+    "title": "Jotties",
     "date": "2026-07-29",
     "time": "19:00",
     "food": "",
-    "notes": "check back for updates",
-	"type": "maybe"
+    "notes": "Special pre-lolla Jotties. It's going to start a little later, I wont be back until about 7:30. More details via text.",
+	"type": "on"
   },
 	  {
-    "title": "Maybe Jotties",
+    "title": "NO JOTTIES",
     "date": "2026-08-05",
     "time": "19:00",
     "food": "",
-    "notes": "Check back for updates",
-	"type": "Maybe"
+    "notes": "",
+	"type": "off"
   },
 	  {
     "title": "Jotties",
