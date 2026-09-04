@@ -31,7 +31,7 @@
 
         const brisket = document.createElement("img");
 
-        brisket.src = "/images/brisket.png";
+        brisket.src = "images/brisket.png";
         brisket.alt = "";
         brisket.draggable = false;
 
