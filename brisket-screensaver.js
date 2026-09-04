@@ -5,7 +5,7 @@
     // SETTINGS
     // ==========================================
 
-    const IDLE_TIME = 60 * 1000; // 60 seconds
+    const IDLE_TIME = 5 * 1000; // 60 seconds
     const BRISKET_SIZE = 280;    // pixels
     const SPEED = 0.4;           // movement speed
 
