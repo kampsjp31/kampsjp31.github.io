@@ -1,297 +1,324 @@
-// JavaScript Document
 (function () {
-  "use strict";
+    "use strict";
 
-  // ============================================
-  // BRISKET SCREENSAVER SETTINGS
-  // ============================================
+    // ==========================================
+    // SETTINGS
+    // ==========================================
 
-  const IDLE_TIME = 60 * 1000; // 60 seconds
-  const BRISKET_SIZE = 280;    // pixels
-  const SPEED = 0.35;          // lower = slower
-  const FADE_TIME = 2500;      // fade in/out in milliseconds
-
-  // Location of your brisket image
-  const BRISKET_IMAGE = "/images/brisket.png";
+    const IDLE_TIME = 60 * 1000; // 60 seconds
+    const BRISKET_SIZE = 280;    // pixels
+    const SPEED = 0.4;           // movement speed
 
 
-  // ============================================
-  // CREATE THE SCREENSAVER
-  // ============================================
+    // ==========================================
+    // WAIT UNTIL PAGE IS READY
+    // ==========================================
 
-  const container = document.createElement("div");
-  container.id = "brisket-screensaver";
+    function startBrisketScreensaver() {
 
-  const brisket = document.createElement("img");
-  brisket.src = BRISKET_IMAGE;
-  brisket.alt = "";
-  brisket.draggable = false;
-
-  container.appendChild(brisket);
-  document.body.appendChild(container);
+        // Don't accidentally create it twice
+        if (document.getElementById("brisket-screensaver")) {
+            return;
+        }
 
 
-  // ============================================
-  // ADD CSS
-  // ============================================
+        // ======================================
+        // CREATE HTML
+        // ======================================
 
-  const style = document.createElement("style");
+        const container = document.createElement("div");
+        container.id = "brisket-screensaver";
 
-  style.textContent = `
-    #brisket-screensaver {
-      position: fixed;
-      inset: 0;
-      width: 100vw;
-      height: 100vh;
+        const brisket = document.createElement("img");
 
-      z-index: 999999;
+        brisket.src = "/images/brisket.png";
+        brisket.alt = "";
+        brisket.draggable = false;
 
-      pointer-events: none;
+        container.appendChild(brisket);
+        document.body.appendChild(container);
 
-      opacity: 0;
-      visibility: hidden;
 
-      transition:
-        opacity ${FADE_TIME}ms ease,
-        visibility ${FADE_TIME}ms ease;
+        // ======================================
+        // CREATE CSS
+        // ======================================
 
-      overflow: hidden;
+        const style = document.createElement("style");
+
+        style.textContent = `
+            #brisket-screensaver {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+
+                z-index: 2147483647;
+
+                pointer-events: none;
+
+                opacity: 0;
+                visibility: hidden;
+
+                transition:
+                    opacity 2s ease,
+                    visibility 2s ease;
+
+                overflow: hidden;
+            }
+
+            #brisket-screensaver.active {
+                opacity: 1;
+                visibility: visible;
+            }
+
+            #brisket-screensaver img {
+                position: absolute;
+
+                width: ${BRISKET_SIZE}px;
+                height: auto;
+
+                left: 0;
+                top: 0;
+
+                display: block;
+
+                pointer-events: none;
+                user-select: none;
+                -webkit-user-drag: none;
+
+                filter: drop-shadow(
+                    0 10px 15px rgba(0,0,0,0.35)
+                );
+            }
+
+            @media (max-width: 600px) {
+                #brisket-screensaver img {
+                    width: 180px;
+                }
+            }
+
+            @media (prefers-reduced-motion: reduce) {
+                #brisket-screensaver {
+                    display: none !important;
+                }
+            }
+        `;
+
+        document.head.appendChild(style);
+
+
+        // ======================================
+        // VARIABLES
+        // ======================================
+
+        let x = 100;
+        let y = 100;
+
+        let vx = SPEED;
+        let vy = SPEED * 0.75;
+
+        let rotation = 0;
+        let rotationDirection = 1;
+
+        let animationFrame = null;
+        let idleTimer = null;
+
+        let active = false;
+
+
+        // ======================================
+        // SHOW BRISKET
+        // ======================================
+
+        function showBrisket() {
+
+            if (active) return;
+
+            active = true;
+
+            // Random starting position
+            const maxX =
+                Math.max(0, window.innerWidth - brisket.offsetWidth);
+
+            const maxY =
+                Math.max(0, window.innerHeight - brisket.offsetHeight);
+
+            x = Math.random() * maxX;
+            y = Math.random() * maxY;
+
+            // Random direction
+            vx = (Math.random() > 0.5 ? 1 : -1) * SPEED;
+            vy = (Math.random() > 0.5 ? 1 : -1) * SPEED * 0.75;
+
+            container.classList.add("active");
+
+            animate();
+        }
+
+
+        // ======================================
+        // HIDE BRISKET
+        // ======================================
+
+        function hideBrisket() {
+
+            active = false;
+
+            container.classList.remove("active");
+
+            if (animationFrame !== null) {
+                cancelAnimationFrame(animationFrame);
+                animationFrame = null;
+            }
+        }
+
+
+        // ======================================
+        // ANIMATE
+        // ======================================
+
+        function animate() {
+
+            if (!active) return;
+
+            const maxX =
+                Math.max(0, window.innerWidth - brisket.offsetWidth);
+
+            const maxY =
+                Math.max(0, window.innerHeight - brisket.offsetHeight);
+
+
+            x += vx;
+            y += vy;
+
+            rotation += 0.03 * rotationDirection;
+
+
+            // LEFT / RIGHT
+            if (x <= 0) {
+                x = 0;
+                vx = Math.abs(vx);
+                rotationDirection *= -1;
+            }
+
+            if (x >= maxX) {
+                x = maxX;
+                vx = -Math.abs(vx);
+                rotationDirection *= -1;
+            }
+
+
+            // TOP / BOTTOM
+            if (y <= 0) {
+                y = 0;
+                vy = Math.abs(vy);
+                rotationDirection *= -1;
+            }
+
+            if (y >= maxY) {
+                y = maxY;
+                vy = -Math.abs(vy);
+                rotationDirection *= -1;
+            }
+
+
+            brisket.style.transform =
+                `translate(${x}px, ${y}px) rotate(${rotation}deg)`;
+
+
+            animationFrame =
+                requestAnimationFrame(animate);
+        }
+
+
+        // ======================================
+        // RESET TIMER
+        // ======================================
+
+        function resetTimer() {
+
+            hideBrisket();
+
+            clearTimeout(idleTimer);
+
+            idleTimer = setTimeout(
+                showBrisket,
+                IDLE_TIME
+            );
+        }
+
+
+        // ======================================
+        // USER ACTIVITY
+        // ======================================
+
+        const events = [
+            "mousemove",
+            "mousedown",
+            "keydown",
+            "scroll",
+            "wheel",
+            "touchstart",
+            "touchmove",
+            "pointerdown"
+        ];
+
+        events.forEach(function (event) {
+
+            document.addEventListener(
+                event,
+                resetTimer,
+                { passive: true }
+            );
+
+        });
+
+
+        // ======================================
+        // WINDOW RESIZE
+        // ======================================
+
+        window.addEventListener("resize", function () {
+
+            if (!active) return;
+
+            const maxX =
+                Math.max(0, window.innerWidth - brisket.offsetWidth);
+
+            const maxY =
+                Math.max(0, window.innerHeight - brisket.offsetHeight);
+
+            x = Math.min(x, maxX);
+            y = Math.min(y, maxY);
+
+        });
+
+
+        // ======================================
+        // START THE TIMER
+        // ======================================
+
+        resetTimer();
+
     }
 
-    #brisket-screensaver.active {
-      opacity: 1;
-      visibility: visible;
+
+    // ==========================================
+    // START AFTER PAGE LOAD
+    // ==========================================
+
+    if (document.readyState === "loading") {
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            startBrisketScreensaver
+        );
+
+    } else {
+
+        startBrisketScreensaver();
+
     }
-
-    #brisket-screensaver img {
-      position: absolute;
-
-      width: ${BRISKET_SIZE}px;
-      height: auto;
-
-      left: 0;
-      top: 0;
-
-      user-select: none;
-      -webkit-user-drag: none;
-
-      will-change: transform;
-
-      filter:
-        drop-shadow(0 12px 18px rgba(0,0,0,0.35));
-    }
-
-    @media (max-width: 600px) {
-      #brisket-screensaver img {
-        width: 180px;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      #brisket-screensaver {
-        display: none !important;
-      }
-    }
-  `;
-
-  document.head.appendChild(style);
-
-
-  // ============================================
-  // ANIMATION VARIABLES
-  // ============================================
-
-  let x = 100;
-  let y = 100;
-
-  let velocityX = SPEED;
-  let velocityY = SPEED * 0.8;
-
-  let rotation = 0;
-  let rotationSpeed = 0.015;
-
-  let animationFrame = null;
-  let idleTimer = null;
-  let active = false;
-
-
-  // ============================================
-  // SHOW BRISKET
-  // ============================================
-
-  function showScreensaver() {
-
-    if (active) return;
-
-    active = true;
-
-    // Start at a random location
-    const maxX = window.innerWidth - brisket.offsetWidth;
-    const maxY = window.innerHeight - brisket.offsetHeight;
-
-    x = Math.random() * Math.max(0, maxX);
-    y = Math.random() * Math.max(0, maxY);
-
-    // Random direction
-    velocityX =
-      (Math.random() > 0.5 ? 1 : -1) * SPEED;
-
-    velocityY =
-      (Math.random() > 0.5 ? 1 : -1) * SPEED * 0.8;
-
-    rotation = Math.random() * 10 - 5;
-
-    brisket.style.transform =
-      `translate3d(${x}px, ${y}px, 0) rotate(${rotation}deg)`;
-
-    container.classList.add("active");
-
-    animate();
-  }
-
-
-  // ============================================
-  // HIDE BRISKET
-  // ============================================
-
-  function hideScreensaver() {
-
-    if (!active) return;
-
-    active = false;
-
-    container.classList.remove("active");
-
-    if (animationFrame) {
-      cancelAnimationFrame(animationFrame);
-      animationFrame = null;
-    }
-  }
-
-
-  // ============================================
-  // MOVE BRISKET
-  // ============================================
-
-  function animate() {
-
-    if (!active) return;
-
-    const maxX =
-      window.innerWidth - brisket.offsetWidth;
-
-    const maxY =
-      window.innerHeight - brisket.offsetHeight;
-
-
-    x += velocityX;
-    y += velocityY;
-
-    rotation += rotationSpeed;
-
-
-    // Bounce left/right
-    if (x <= 0 || x >= maxX) {
-
-      velocityX *= -1;
-
-      x = Math.max(0, Math.min(x, maxX));
-
-      // Slightly change rotation
-      rotationSpeed *= -1;
-    }
-
-
-    // Bounce top/bottom
-    if (y <= 0 || y >= maxY) {
-
-      velocityY *= -1;
-
-      y = Math.max(0, Math.min(y, maxY));
-
-      rotationSpeed *= -1;
-    }
-
-
-    brisket.style.transform =
-      `translate3d(${x}px, ${y}px, 0) rotate(${rotation}deg)`;
-
-
-    animationFrame =
-      requestAnimationFrame(animate);
-  }
-
-
-  // ============================================
-  // RESET INACTIVITY TIMER
-  // ============================================
-
-  function resetIdleTimer() {
-
-    hideScreensaver();
-
-    clearTimeout(idleTimer);
-
-    idleTimer = setTimeout(
-      showScreensaver,
-      IDLE_TIME
-    );
-  }
-
-
-  // ============================================
-  // USER ACTIVITY
-  // ============================================
-
-  const activityEvents = [
-    "mousemove",
-    "mousedown",
-    "keydown",
-    "scroll",
-    "wheel",
-    "touchstart",
-    "touchmove",
-    "pointerdown"
-  ];
-
-
-  activityEvents.forEach(function (eventName) {
-
-    document.addEventListener(
-      eventName,
-      resetIdleTimer,
-      {
-        passive: true
-      }
-    );
-
-  });
-
-
-  // ============================================
-  // WINDOW RESIZE
-  // ============================================
-
-  window.addEventListener("resize", function () {
-
-    if (!active) return;
-
-    const maxX =
-      window.innerWidth - brisket.offsetWidth;
-
-    const maxY =
-      window.innerHeight - brisket.offsetHeight;
-
-    x = Math.max(0, Math.min(x, maxX));
-    y = Math.max(0, Math.min(y, maxY));
-
-  });
-
-
-  // ============================================
-  // START
-  // ============================================
-
-  resetIdleTimer();
 
 })();
