@@ -1,65 +1,17 @@
 [
 	  {
     "title": "Jotties",
-    "date": "2026-07-29",
-    "time": "19:00",
-    "food": "",
-    "notes": "Special pre-lolla Jotties. It's going to start a little later, I wont be back until about 7:30. More details via text.",
-	"type": "on"
-  },
-	  {
-    "title": "NO JOTTIES",
-    "date": "2026-08-05",
-    "time": "19:00",
-    "food": "",
-    "notes": "",
-	"type": "off"
-  },
-	  {
-    "title": "Jotties",
-    "date": "2026-08-12",
-    "time": "19:00",
-    "food": "BBQ For sure",
-    "notes": "Bring something!",
-	"type": "on"
-  },
-	  {
-    "title": "Jotties",
-    "date": "2026-08-19",
-    "time": "19:00",
-    "food": "Something fun, different, and special",
-    "notes": "bring something fun, different, and special",
-	"type": "On"
-  },
-	  {
-    "title": "Jotties",
-    "date": "2026-08-26",
-    "time": "19:00",
-    "food": "Brats",
-    "notes": "bring something",
-	"type": "On"
-  },
-	  {
-    "title": "Jotties",
-    "date": "2026-09-02",
-    "time": "19:00",
-    "food": "Smoked Chicken",
-    "notes": "bring something!",
-	"type": "On"
-  },
-	  {
-    "title": "Jotties",
     "date": "2026-09-09",
     "time": "19:00",
-    "food": "TBD",
-    "notes": "",
+    "food": "Pulled Pork",
+    "notes": "Keeping that new smoker train rollin! bring something!",
 	"type": "On"
   },
 	  {
     "title": "Jotties",
     "date": "2026-09-16",
     "time": "19:00",
-    "food": "Some BBQ",
+    "food": "TBD but probably bbq",
     "notes": "Bring something!",
 	"type": "On"
   },
