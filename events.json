@@ -11,7 +11,7 @@
     "title": "Jotties",
     "date": "2026-09-16",
     "time": "19:00",
-    "food": "TBD but probably bbq",
+    "food": "Something Spicy!",
     "notes": "Bring something!",
 	"type": "On"
   },
@@ -30,5 +30,53 @@
     "food": "TBD",
     "notes": "",
 	"type": "On"
+  },
+	 {
+    "title": "Jotties",
+    "date": "2026-10-07",
+    "time": "19:00",
+    "food": "TBD",
+    "notes": "",
+	"type": "On"
+  },
+	 {
+    "title": "Jotties",
+    "date": "2026-10-14",
+    "time": "19:00",
+    "food": "TBD",
+    "notes": "",
+	"type": "On"
+  },
+	 {
+    "title": "Jotties",
+    "date": "2026-10-21",
+    "time": "19:00",
+    "food": "TBD",
+    "notes": "",
+	"type": "On"
+  },
+	 {
+    "title": "Jotties",
+    "date": "2026-10-28",
+    "time": "19:00",
+    "food": "TBD",
+    "notes": "",
+	"type": "On"
+  },
+	 {
+    "title": "Jotties",
+    "date": "2026-11-04",
+    "time": "19:00",
+    "food": "TBD",
+    "notes": "",
+	"type": "On"
+  },
+	 {
+    "title": "Jotties at PASIC!",
+    "date": "2026-11-11",
+    "time": "19:00",
+    "food": "TBD",
+    "notes": "",
+	"type": "Off"
   }
 ]
