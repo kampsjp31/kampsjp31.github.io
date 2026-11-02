@@ -67,15 +67,15 @@
     "title": "Jotties",
     "date": "2026-11-04",
     "time": "19:00",
-    "food": "TBD",
-    "notes": "",
+    "food": "Smoking a Rack of Pork",
+    "notes": "Bring something!",
 	"type": "On"
   },
 	 {
     "title": "Jotties at PASIC!",
     "date": "2026-11-11",
     "time": "19:00",
-    "food": "TBD",
+    "food": "--",
     "notes": "",
 	"type": "Off"
   }
