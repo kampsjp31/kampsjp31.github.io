@@ -1,68 +1,4 @@
 [
-	  {
-    "title": "Jotties",
-    "date": "2026-09-09",
-    "time": "19:00",
-    "food": "Pulled Pork",
-    "notes": "Keeping that new smoker train rollin! bring something!",
-	"type": "On"
-  },
-	  {
-    "title": "Jotties",
-    "date": "2026-09-16",
-    "time": "19:00",
-    "food": "Something Spicy!",
-    "notes": "Bring something!",
-	"type": "On"
-  },
-	  {
-    "title": "Jotties",
-    "date": "2026-09-23",
-    "time": "19:00",
-    "food": "Beef Pot Roast",
-    "notes": "bring something!",
-	"type": "On"
-  },
-	  {
-    "title": "Jotties",
-    "date": "2026-09-30",
-    "time": "19:00",
-    "food": "BBQ Pork Belly",
-    "notes": "bring something!",
-	"type": "On"
-  },
-	 {
-    "title": "Jotties",
-    "date": "2026-10-07",
-    "time": "19:00",
-    "food": "Pulled Pork",
-    "notes": "Bring something!",
-	"type": "On"
-  },
-	 {
-    "title": "Jotties",
-    "date": "2026-10-14",
-    "time": "19:00",
-    "food": "Pulled Pork",
-    "notes": "Bring Something!",
-	"type": "On"
-  },
-	 {
-    "title": "Jotties",
-    "date": "2026-10-21",
-    "time": "19:00",
-    "food": "Chili",
-    "notes": "bring something",
-	"type": "On"
-  },
-	 {
-    "title": "Jotties",
-    "date": "2026-10-28",
-    "time": "19:00",
-    "food": "Making Chicken!",
-    "notes": "Bring something spooky",
-	"type": "On"
-  },
 	 {
     "title": "Jotties",
     "date": "2026-11-04",
@@ -76,6 +12,30 @@
     "date": "2026-11-11",
     "time": "19:00",
     "food": "--",
+    "notes": "",
+	"type": "Off"
+  },
+	{
+    "title": "Jotties",
+    "date": "2026-11-18",
+    "time": "19:00",
+    "food": "Probably making Chili",
+    "notes": "bring something",
+	"type": "On"
+  },
+	{
+    "title": "NO JOTTIES",
+    "date": "2026-11-25",
+    "time": "19:00",
+    "food": "--",
+    "notes": "",
+	"type": "Off"
+  },
+	{
+    "title": "Jotties",
+    "date": "2026-12-02",
+    "time": "19:00",
+    "food": "TBD",
     "notes": "",
 	"type": "Off"
   }
